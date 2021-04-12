@@ -24,13 +24,15 @@ public class NPCController : MonoBehaviour
         scared = false;
         radius = 10;
         rotation = 90;
-        speed = 2;
+        speed = 0;
         timer = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
+        float delta = Time.deltaTime * 1000;
+
         if (scared == false)
         {
 
@@ -40,7 +42,7 @@ public class NPCController : MonoBehaviour
         {
             rb2d.velocity = transform.up * speed*2; // speed when they are moving with danger
         }
-        float delta = Time.deltaTime * 1000;
+        
 
         if (timer <= 0)
         {
@@ -50,10 +52,14 @@ public class NPCController : MonoBehaviour
         }
         else
         {
-            timer -= Time.deltaTime; // time
+            timer -= Time.deltaTime; // 
         }
         GetScared();
 
+    }
+    private void FixedUpdate()
+    {
+        
     }
 
     private void changedirection()
@@ -75,7 +81,7 @@ public class NPCController : MonoBehaviour
         timer = 4;
     }//function with a random nuber that rotates the NPC randomly
 
-    private void GetScared()
+    private void GetScared() // changes the bool to change the speed of the NPC
     {
         if (Player.GetComponent<Character>().suckingblood == true && Vector2.Distance(this.transform.position, Player.transform.position) <= radius && scared==false)
         {
@@ -88,9 +94,17 @@ public class NPCController : MonoBehaviour
             scared = false;
         }
     }
-    void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected() //show the radio in unity
     {
         Gizmos.color = Color.white;
         Gizmos.DrawWireSphere(transform.position, radius);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "Playable" || collision.gameObject.tag == "Scenario") //change direction if an NPC collides with a player a part from the scenario
+        {
+            changedirection();
+        }
     }
 }

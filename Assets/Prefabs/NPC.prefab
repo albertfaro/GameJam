@@ -98,6 +98,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   rotation: 90
   speed: 100
+  radius: 6
+  Player: {fileID: 0}
 --- !u!50 &8198067866004829854
 Rigidbody2D:
   serializedVersion: 4
@@ -118,7 +120,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &8198067866004829853
 BoxCollider2D:
   m_ObjectHideFlags: 0

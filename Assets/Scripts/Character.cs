@@ -7,6 +7,7 @@ public class Character : MonoBehaviour
 
     public int speed = 2;
     public float rotation = 100;
+    public bool suckingblood = false;
     
     // Start is called before the first frame update
     void Start()

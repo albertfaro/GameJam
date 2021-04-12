@@ -10,7 +10,9 @@ public class Character : MonoBehaviour
     public bool cansuckblood = false;
     public bool suckingblood = false;
     private BoxCollider2D bc2d;
-
+    public float life;
+    public float damagetimer;
+    public bool takingdamage;
 
     private void Awake()
     {
@@ -19,13 +21,18 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        damagetimer = 3;
+        life = 99;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (takingdamage)
+        {
+            damagetimer -= Time.deltaTime;
+            takedamage();
+        }
         //MOVEMENT
         if (Input.GetKey(KeyCode.W))
         {
@@ -74,6 +81,15 @@ public class Character : MonoBehaviour
         return false;
     }
 
+    private void takedamage()
+    {
+        if (damagetimer <= 0)
+        {
+            life--;
+            damagetimer = 3;
+        }
+    }
+
     private void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.gameObject.tag == "NPC")
@@ -110,6 +126,22 @@ public class Character : MonoBehaviour
         {
             cansuckblood = false;
             killingenemy = null;
+        }
+    }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Linterna")
+        {
+            takingdamage = true;
+        }
+    }
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Linterna")
+        {
+            takingdamage = false;
+            damagetimer = 3;
         }
     }
 }

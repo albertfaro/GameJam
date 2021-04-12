@@ -5,6 +5,7 @@ using UnityEngine;
 public class NPCController : MonoBehaviour
 {
     private Rigidbody2D rb2d; //reference to this object's rigid body
+    private BoxCollider2D bc2d;
     public float rotation; // the rotation that will be applied to the NPC when he changes his movement
     public float speed; // the speed the npc walks
     private float timer; //the timer to change the movement of the NPC
@@ -12,10 +13,16 @@ public class NPCController : MonoBehaviour
     private bool scared;// bool that will activate the scared mode, that will make the npc run away from the main character
     public float radius; //the radius of detection, if the main character drinks blood of an NPC inside this radius range, the NPC will enter in scared mode
     public GameObject Player;
+    public bool dead;
+    public float deathtimer;
+    private SpriteRenderer sprite;
+   
 
     private void Awake()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        bc2d = GetComponent<BoxCollider2D>();
+        sprite = GetComponent<SpriteRenderer>();
     }
     // Start is called before the first frame update
     void Start()
@@ -24,38 +31,53 @@ public class NPCController : MonoBehaviour
         scared = false;
         radius = 10;
         rotation = 90;
-        speed = 0;
+        speed = 2;
         timer = 0;
+        deathtimer = 2;
     }
 
     // Update is called once per frame
     void Update()
     {
-        float delta = Time.deltaTime * 1000;
-
-        if (scared == false)
+        float delta = Time.deltaTime;
+        if (dead==true)
         {
+            sprite.enabled = false;
+            Destroy(rb2d);
+            Destroy(bc2d);
+            deathtimer -= delta;
 
-            rb2d.velocity = transform.up * speed; // speed when they are moving without danger
         }
-        else
+        if (deathtimer <= 0)
         {
-            rb2d.velocity = transform.up * speed*2; // speed when they are moving with danger
+            sprite.enabled = true;
+            Destroy(gameObject, 5);
         }
-        
+        if (dead == false)
+        {
+            if (scared == false)
+            {
 
-        if (timer <= 0)
-        {
-            changedirection();
-            
-          
-        }
-        else
-        {
-            timer -= Time.deltaTime; // 
-        }
-        GetScared();
+                rb2d.velocity = transform.up * speed; // speed when they are moving without danger
+            }
+            else
+            {
+                rb2d.velocity = transform.up * speed * 2; // speed when they are moving with danger
+            }
 
+
+            if (timer <= 0)
+            {
+                changedirection();
+
+
+            }
+            else
+            {
+                timer -= Time.deltaTime; // 
+            }
+            GetScared();
+        }
     }
     private void FixedUpdate()
     {
@@ -102,7 +124,7 @@ public class NPCController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Playable" || collision.gameObject.tag == "Scenario") //change direction if an NPC collides with a player a part from the scenario
+        if (collision.gameObject.tag == "Playable" || collision.gameObject.tag == "Scenario"|| collision.gameObject.tag=="Playable"|| collision.gameObject.tag=="Police") //change direction if an NPC collides with a player a part from the scenario
         {
             changedirection();
         }

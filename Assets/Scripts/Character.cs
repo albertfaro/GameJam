@@ -13,6 +13,10 @@ public class Character : MonoBehaviour
     public float life;
     public float damagetimer;
     public bool takingdamage;
+    public int bloodmeter;
+    public float battimer;
+    public bool batform;
+    public float scaretimer;
 
     private void Awake()
     {
@@ -21,13 +25,37 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        battimer = 6;
         damagetimer = 3;
         life = 99;
+        scaretimer = 0;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {   
+        
+        float delta = Time.deltaTime;
+        if (scaretimer > 0)
+        {
+            scaretimer -= delta;
+        }
+        if (batform == true)
+        {
+            speed = 4;
+            battimer -= delta;
+            if(battimer <= 0)
+            {
+                batform = false;
+                battimer = 6;
+            }
+
+        }
+        else
+        {
+            speed = 2;
+        }
+
         if (takingdamage)
         {
             damagetimer -= Time.deltaTime;
@@ -60,16 +88,41 @@ public class Character : MonoBehaviour
 
         //...
 
-        if(Input.GetKey(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-           
-          
+
+            if (cansuckblood)
+            {
+                killingenemy.dead = true;
+                bloodmeter++;
+                suckingblood = true;
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+
+            if (batform == false)
+            {
+                turnIntoBat();
+            }
         }
 
 
 
 
     }
+
+    private void turnIntoBat()
+    {
+        if (bloodmeter > 0)
+        {
+            batform = true;
+            bloodmeter--;
+        }
+
+    }
+
     private bool checkRaycastWithNPC(RaycastHit2D hit)
     {
        

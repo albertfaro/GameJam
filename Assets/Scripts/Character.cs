@@ -17,10 +17,12 @@ public class Character : MonoBehaviour
     public float battimer;
     public bool batform;
     public float scaretimer;
+    private Rigidbody2D rb2d;
 
     private void Awake()
     {
         bc2d = GetComponent<BoxCollider2D>();
+        rb2d = GetComponent<Rigidbody2D>();
     }
     // Start is called before the first frame update
     void Start()
@@ -33,84 +35,92 @@ public class Character : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {   
-        
+    {
+        rb2d.velocity = Vector2.zero;
         float delta = Time.deltaTime;
-        if (scaretimer > 0)
+        if (scaretimer > 0 && suckingblood)
         {
             scaretimer -= delta;
         }
-        if (batform == true)
+        else if (scaretimer <= 0)
         {
-            speed = 4;
-            battimer -= delta;
-            if(battimer <= 0)
             {
-                batform = false;
-                battimer = 6;
+                suckingblood = false;
+
+            }
+            if (batform == true)
+            {
+                speed = 4;
+                battimer -= delta;
+                if (battimer <= 0)
+                {
+                    batform = false;
+                    battimer = 6;
+                }
+
+            }
+            else
+            {
+                speed = 2;
             }
 
-        }
-        else
-        {
-            speed = 2;
-        }
-
-        if (takingdamage)
-        {
-            damagetimer -= Time.deltaTime;
-            takedamage();
-        }
-        //MOVEMENT
-        if (Input.GetKey(KeyCode.W))
-        {
-            transform.Translate(Vector3.up * speed * Time.deltaTime);
-        }
-
-       
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            transform.Rotate(0, 0, -Input.GetAxis("Horizontal") *
-            rotation * Time.deltaTime);
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            transform.Rotate(0, 0, Input.GetAxis("Horizontal") *
-            -rotation * Time.deltaTime);
-        }
-
-        if(Input.GetKey(KeyCode.S))
+            if (takingdamage)
             {
-            transform.Translate(Vector3.down * speed * Time.deltaTime);
-        }
-
-        //...
-
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-
-            if (cansuckblood)
-            {
-                killingenemy.dead = true;
-                bloodmeter++;
-                suckingblood = true;
+                damagetimer -= Time.deltaTime;
+                takedamage();
             }
-        }
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-
-            if (batform == false)
+            //MOVEMENT
+            if (Input.GetKey(KeyCode.W))
             {
-                turnIntoBat();
+                transform.Translate(Vector3.up * speed * Time.deltaTime);
             }
+
+
+
+            if (Input.GetKey(KeyCode.A))
+            {
+                transform.Rotate(0, 0, -Input.GetAxis("Horizontal") *
+                rotation * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.D))
+            {
+                transform.Rotate(0, 0, Input.GetAxis("Horizontal") *
+                -rotation * Time.deltaTime);
+            }
+
+            if (Input.GetKey(KeyCode.S))
+            {
+                transform.Translate(Vector3.down * speed * Time.deltaTime);
+            }
+
+            //...
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+
+                if (cansuckblood)
+                {
+                    killingenemy.dead = true;
+                    bloodmeter++;
+                    suckingblood = true;
+                    scaretimer = 2;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.J))
+            {
+
+                if (batform == false)
+                {
+                    turnIntoBat();
+                }
+            }
+
+
+
+
         }
-
-
-
-
     }
 
     private void turnIntoBat()

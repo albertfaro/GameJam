@@ -191,7 +191,7 @@ PrefabInstance:
     - target: {fileID: 8198067866004829854, guid: c9a8e2dea5812494192ce99a107554d2,
         type: 3}
       propertyPath: m_Mass
-      value: 1000000
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9a8e2dea5812494192ce99a107554d2, type: 3}
@@ -380,7 +380,7 @@ PrefabInstance:
     - target: {fileID: 8198067866004829854, guid: c9a8e2dea5812494192ce99a107554d2,
         type: 3}
       propertyPath: m_Mass
-      value: 0.0001
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9a8e2dea5812494192ce99a107554d2, type: 3}
@@ -450,11 +450,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8198067866004829854, guid: c9a8e2dea5812494192ce99a107554d2,
-        type: 3}
-      propertyPath: m_Mass
-      value: 1000000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c9a8e2dea5812494192ce99a107554d2, type: 3}
@@ -658,11 +653,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1942003749977746322, guid: 3e28f486a36912e409fbf16b3939a6be,
-        type: 3}
-      propertyPath: m_Mass
-      value: 1000000
-      objectReference: {fileID: 0}
     - target: {fileID: 1942003749977746327, guid: 3e28f486a36912e409fbf16b3939a6be,
         type: 3}
       propertyPath: m_Name
@@ -806,6 +796,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2324495255157826335, guid: 6e7444b3aa0769a45a344cb586a342d4,
+        type: 3}
+      propertyPath: m_BodyType
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6e7444b3aa0769a45a344cb586a342d4, type: 3}
 --- !u!1001 &3161301310853981732
@@ -874,11 +869,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Policia
-      objectReference: {fileID: 0}
-    - target: {fileID: 3161301310488887886, guid: 74248d646acb16840b7aa7d2e3713ea2,
-        type: 3}
-      propertyPath: m_Mass
-      value: 1000000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 74248d646acb16840b7aa7d2e3713ea2, type: 3}

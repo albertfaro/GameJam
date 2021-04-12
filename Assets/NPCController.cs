@@ -31,7 +31,7 @@ public class NPCController : MonoBehaviour
         scared = false;
         radius = 10;
         rotation = 90;
-        speed = 2;
+        speed = 1;
         timer = 0;
         deathtimer = 2;
     }

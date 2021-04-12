@@ -7,8 +7,8 @@ public class PoliceController : MonoBehaviour
     private Rigidbody2D rb2d;
     public float rotation; // the rotation that will be applied to the NPC when he changes his movement
     public float speed; // the speed the npc walks
-    private float timer; //the timer to change the movement of the NPC
-    private bool chasing;// bool that will activate the scared mode, that will make the npc run away from the main character
+    public float timer; //the timer to change the movement of the NPC
+    public bool chasing;// bool that will activate the scared mode, that will make the npc run away from the main character
     public float radius; //the radius of detection, if the main character drinks blood of an NPC inside this radius range, the NPC will enter in scared mode
     public GameObject Player;
 
@@ -29,8 +29,26 @@ public class PoliceController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb2d.velocity = transform.up * speed; // speed when they are moving without danger
+        float delta = Time.deltaTime;
+        if (chasing == true)
+        {
+            transform.position = Vector3.MoveTowards(rb2d.transform.position, Player.transform.position, speed * delta);
+            timer -= Time.deltaTime;
+            if (timer <= 0)
+            {
+                chasing = false;
+            }
 
+        }
+        else
+        {
+            rb2d.velocity = transform.up * speed; // speed when they are moving without danger
+            if (Player.gameObject.GetComponent<Character>().suckingblood == true && Vector2.Distance(this.transform.position, Player.transform.position) <= radius)
+            {
+                chasing = true;
+                timer = 6;
+            }
+        }
     }
     private void changedirection()
     {

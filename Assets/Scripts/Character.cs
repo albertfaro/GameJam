@@ -116,7 +116,7 @@ public class Character : MonoBehaviour
                 }
             }
 
-            if (Input.GetKeyDown(KeyCode.J))
+            if (Input.GetKeyDown(KeyCode.LeftShift))
             {
 
                 if (batform == false)

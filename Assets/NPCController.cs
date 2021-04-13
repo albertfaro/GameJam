@@ -30,9 +30,9 @@ public class NPCController : MonoBehaviour
     {
         Player = GameObject.FindGameObjectWithTag("Playable");
         scared = false;
-        radius = 10;
+        radius = 100;
         rotation = 90;
-        speed = 5;
+        speed = 15;
         timer = 0;
         deathtimer = 2;
     }
@@ -63,9 +63,9 @@ public class NPCController : MonoBehaviour
             }
             else
             {
-                rb2d.velocity = transform.up * (speed + 5); // speed when they are moving with danger
+                rb2d.velocity = transform.up * (speed + 40); // speed when they are moving with danger
                   scaredtimer-=delta;
-}
+        }
 
 
             if (timer <= 0)

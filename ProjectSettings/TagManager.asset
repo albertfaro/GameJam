@@ -11,6 +11,7 @@ TagManager:
   - Linterna
   - Scenario
   - Cam
+  - ZoneLimiter
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Enemies
   - NPC
   - Scenario
-  - 
+  - Farola
   - 
   - 
   - 

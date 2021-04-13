@@ -15,6 +15,7 @@ public class NPCController : MonoBehaviour
     public GameObject Player;
     public bool dead;
     public float deathtimer;
+    public float scaredtimer;
     private SpriteRenderer sprite;
    
 
@@ -31,7 +32,7 @@ public class NPCController : MonoBehaviour
         scared = false;
         radius = 10;
         rotation = 90;
-        speed = 1;
+        speed = 5;
         timer = 0;
         deathtimer = 2;
     }
@@ -62,8 +63,9 @@ public class NPCController : MonoBehaviour
             }
             else
             {
-                rb2d.velocity = transform.up * speed * 2; // speed when they are moving with danger
-            }
+                rb2d.velocity = transform.up * (speed + 5); // speed when they are moving with danger
+                  scaredtimer-=delta;
+}
 
 
             if (timer <= 0)
@@ -86,7 +88,7 @@ public class NPCController : MonoBehaviour
 
     private void changedirection()
     {
-        turn = Random.Range(0, 3);
+        turn = Random.Range(0, 2);
         switch (turn)
         {
             case 0:
@@ -100,7 +102,7 @@ public class NPCController : MonoBehaviour
                 break;
 
         }
-        timer = 4;
+        timer = 2;
     }//function with a random nuber that rotates the NPC randomly
 
     private void GetScared() // changes the bool to change the speed of the NPC
@@ -108,10 +110,10 @@ public class NPCController : MonoBehaviour
         if (Player.GetComponent<Character>().suckingblood == true && Vector2.Distance(this.transform.position, Player.transform.position) <= radius && scared==false)
         {
             scared = true;
-            
+            scaredtimer = 6;
 
         }
-        if (Vector2.Distance(this.transform.position, Player.transform.position) > radius)
+        if (Vector2.Distance(this.transform.position, Player.transform.position) > radius && scaredtimer<=0)
         {
             scared = false;
         }
@@ -126,7 +128,15 @@ public class NPCController : MonoBehaviour
     {
         if (collision.gameObject.tag == "Playable" || collision.gameObject.tag == "Scenario"|| collision.gameObject.tag=="Playable"|| collision.gameObject.tag=="Police") //change direction if an NPC collides with a player a part from the scenario
         {
-            changedirection();
+            transform.Rotate(new Vector3(0, 0, -180));
+        }
+
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "ZoneLimiter")
+        {
+            transform.Rotate(new Vector3(0, 0, -180));
         }
     }
 }

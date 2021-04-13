@@ -23,32 +23,21 @@ public class PoliceController : MonoBehaviour
     {
         chasing = false;
         radius = 13;
-        
+        speed = 8;
     }
 
     // Update is called once per frame
     void Update()
     {
         float delta = Time.deltaTime;
-        if (chasing == true)
-        {
-            transform.position = Vector3.MoveTowards(rb2d.transform.position, Player.transform.position, speed * delta);
-            timer -= Time.deltaTime;
-            if (timer <= 0)
-            {
-                chasing = false;
-            }
 
-        }
-        else
-        {
             rb2d.velocity = transform.up * speed; // speed when they are moving without danger
             if (Player.gameObject.GetComponent<Character>().suckingblood == true && Vector2.Distance(this.transform.position, Player.transform.position) <= radius)
             {
                 chasing = true;
                 timer = 6;
             }
-        }
+        
     }
     private void changedirection()
     {

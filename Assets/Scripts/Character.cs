@@ -5,7 +5,7 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public NPCController killingenemy;
-    public int speed = 2;
+    private int speed = 10;
     public float rotation = 100;
     public bool cansuckblood = false;
     public bool suckingblood = false;
@@ -36,8 +36,9 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        rb2d.velocity = Vector2.zero;
+        
         float delta = Time.deltaTime;
+        rb2d.velocity = Vector2.zero;
         if (scaretimer > 0 && suckingblood)
         {
             scaretimer -= delta;
@@ -50,7 +51,7 @@ public class Character : MonoBehaviour
             }
             if (batform == true)
             {
-                speed = 4;
+                speed = 15;
                 battimer -= delta;
                 if (battimer <= 0)
                 {
@@ -61,7 +62,7 @@ public class Character : MonoBehaviour
             }
             else
             {
-                speed = 2;
+                speed = 10;
             }
 
             if (takingdamage)

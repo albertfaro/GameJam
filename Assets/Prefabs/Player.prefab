@@ -73,7 +73,7 @@ SpriteRenderer:
   m_SortingLayerID: -1155614171
   m_SortingLayer: 1
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 5fd5e703e8abd004bb7643e6a16b3cf5, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ccfc8282c9dca984caa9a1ba7f478de1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -118,18 +118,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 1.367918}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.23, y: 1.11}
+    oldSize: {x: 20.48, y: 15.36}
     newSize: {x: 1.23, y: 1.11}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.23, y: 1.11}
+  m_Size: {x: 9.869507, y: 8.453648}
   m_EdgeRadius: 0
 --- !u!114 &1942003749977746320
 MonoBehaviour:
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   killingenemy: {fileID: 0}
-  speed: 3
+  cam: {fileID: 0}
   rotation: 100
   cansuckblood: 0
   suckingblood: 0

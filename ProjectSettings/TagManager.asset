@@ -9,6 +9,8 @@ TagManager:
   - Police
   - PoliceLimit
   - Linterna
+  - Scenario
+  - Cam
   layers:
   - Default
   - TransparentFX
@@ -22,7 +24,7 @@ TagManager:
   - Player
   - Enemies
   - NPC
-  - 
+  - Scenario
   - 
   - 
   - 

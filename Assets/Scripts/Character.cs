@@ -5,7 +5,8 @@ using UnityEngine;
 public class Character : MonoBehaviour
 {
     public NPCController killingenemy;
-    private int speed = 10;
+    public Camera cam;
+    private int speed = 50;
     public float rotation = 100;
     public bool cansuckblood = false;
     public bool suckingblood = false;
@@ -18,11 +19,12 @@ public class Character : MonoBehaviour
     public bool batform;
     public float scaretimer;
     private Rigidbody2D rb2d;
-
+    private Vector3 mouseposition;
     private void Awake()
     {
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
+       
     }
     // Start is called before the first frame update
     void Start()
@@ -36,9 +38,10 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
+
         float delta = Time.deltaTime;
-        rb2d.velocity = Vector2.zero;
+      
         if (scaretimer > 0 && suckingblood)
         {
             scaretimer -= delta;
@@ -62,7 +65,7 @@ public class Character : MonoBehaviour
             }
             else
             {
-                speed = 10;
+                speed = 50;
             }
 
             if (takingdamage)
@@ -71,6 +74,10 @@ public class Character : MonoBehaviour
                 takedamage();
             }
             //MOVEMENT
+
+
+            facemouse();
+
             if (Input.GetKey(KeyCode.W))
             {
                 transform.Translate(Vector3.up * speed * Time.deltaTime);
@@ -78,17 +85,7 @@ public class Character : MonoBehaviour
 
 
 
-            if (Input.GetKey(KeyCode.A))
-            {
-                transform.Rotate(0, 0, -Input.GetAxis("Horizontal") *
-                rotation * Time.deltaTime);
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                transform.Rotate(0, 0, Input.GetAxis("Horizontal") *
-                -rotation * Time.deltaTime);
-            }
+          
 
             if (Input.GetKey(KeyCode.S))
             {
@@ -132,6 +129,12 @@ public class Character : MonoBehaviour
             bloodmeter--;
         }
 
+    }
+    private void facemouse()
+    {
+        Vector2 MousePos = cam.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 NewPos = new Vector2(MousePos.x - transform.position.x, MousePos.y - transform.position.y);
+        transform.up = NewPos;
     }
 
     private bool checkRaycastWithNPC(RaycastHit2D hit)

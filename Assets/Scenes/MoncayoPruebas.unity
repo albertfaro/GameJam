@@ -6580,6 +6580,11 @@ PrefabInstance:
       propertyPath: remainingCiv
       value: 
       objectReference: {fileID: 8916198}
+    - target: {fileID: 318800471247659817, guid: 562805d97d45e9c4aa42508103a93445,
+        type: 3}
+      propertyPath: nightCountText
+      value: 
+      objectReference: {fileID: 1097308028}
     - target: {fileID: 318800471247659818, guid: 562805d97d45e9c4aa42508103a93445,
         type: 3}
       propertyPath: m_RootOrder
@@ -10437,7 +10442,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 100.2, y: 12.8}
+  m_AnchoredPosition: {x: 100.19998, y: 12.800003}
   m_SizeDelta: {x: 201.43335, y: 26.547245}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1097308028

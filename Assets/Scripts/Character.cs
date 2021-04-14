@@ -9,6 +9,8 @@ public class Character : MonoBehaviour
     Vector2 normalscale;
     private Animator animator;
     public bool safe;
+    
+    
     public enum Direction { NONE, UP, DOWN, LEFT, RIGHT };
     private Direction vampiremove;
     public NPCController killingenemy;
@@ -37,7 +39,7 @@ public class Character : MonoBehaviour
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-       
+    
     }
     // Start is called before the first frame update
     void Start()
@@ -57,122 +59,124 @@ public class Character : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
 
+            float delta = Time.deltaTime;
+            vampiremove = Direction.NONE;
 
-        float delta = Time.deltaTime;
-        vampiremove = Direction.NONE;
-
-        if (scaretimer > 0 && suckingblood)
-        {
-            scaretimer -= delta;
-        }
-        else if (scaretimer <= 0)
-        {
-
-            animator.SetBool(killing1id, false);
-            animator.SetBool(killing2id, false);
-            animator.SetBool(killing3id, false);
-            this.transform.localScale = normalscale;
-
-            suckingblood = false;
-
-     
-
-
-            if (batform == true)
+            if (scaretimer > 0 && suckingblood)
             {
-
-                BatForm();
+                scaretimer -= delta;
             }
-            else if (takingdamage == true)
-            {
-                speed = 30; 
-                damagetimer -= Time.deltaTime;
-                takedamage();
-            }
-            else if(batform==false && takingdamage==false)
-            {
-                speed = 50;
-            }
-
-        
-            //MOVEMENT
-
-
-            facemouse();
-
-            if (Input.GetKey(KeyCode.W))
-            {
-                vampiremove = Direction.UP;
-               
-            }
-
-            if (Input.GetKey(KeyCode.S))
-            {
-                vampiremove = Direction.DOWN;
-                
-            }
-
-            if (Input.GetKey(KeyCode.D))
-            {
-                vampiremove = Direction.RIGHT;
-               
-            }
-
-            if (Input.GetKey(KeyCode.A))
-            {
-                vampiremove = Direction.LEFT;
-                
-            }
-
-            //...
-
-            if (Input.GetKeyDown(KeyCode.Space))
+            else if (scaretimer <= 0)
             {
 
-                if (cansuckblood)
+                animator.SetBool(killing1id, false);
+                animator.SetBool(killing2id, false);
+                animator.SetBool(killing3id, false);
+                this.transform.localScale = normalscale;
+
+                suckingblood = false;
+
+
+
+
+                if (batform == true)
                 {
-                    FindObjectOfType<SoundManager>().Play("Mordisco");
-                    killingenemy.dead = true;
-                    this.transform.localScale = bitescale;
-                    
-                    if (Enemy.tag == "NPC1")
-                    {
-                        animator.SetBool(killing1id, true);
-                    }
-                    else if (Enemy.tag == "NPC2")
-                    {
-                        animator.SetBool(killing2id, true);
-                    }
-                    else if (Enemy.tag == "NPC3")
-                    {
-                        animator.SetBool(killing3id, true);
-                    }
-                    bloodmeter++;
-                    suckingblood = true;
-                    scaretimer = 2;
-                }
-            }
 
-            if (Input.GetKeyDown(KeyCode.LeftShift))
-            {
-
-                if (batform == false)
-                {
                     BatForm();
                 }
+                else if (takingdamage == true)
+                {
+                    speed = 30;
+                    damagetimer -= Time.deltaTime;
+                    takedamage();
+                }
+                else if (batform == false && takingdamage == false)
+                {
+                    speed = 50;
+                }
+
+
+                //MOVEMENT
+
+
+                facemouse();
+
+                if (Input.GetKey(KeyCode.W))
+                {
+                    vampiremove = Direction.UP;
+
+                }
+
+                if (Input.GetKey(KeyCode.S))
+                {
+                    vampiremove = Direction.DOWN;
+
+                }
+
+                if (Input.GetKey(KeyCode.D))
+                {
+                    vampiremove = Direction.RIGHT;
+
+                }
+
+                if (Input.GetKey(KeyCode.A))
+                {
+                    vampiremove = Direction.LEFT;
+
+                }
+
+                //...
+
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+
+                    if (cansuckblood)
+                    {
+                        FindObjectOfType<SoundManager>().Play("Mordisco");
+                        killingenemy.dead = true;
+                        this.transform.localScale = bitescale;
+
+                        if (Enemy.tag == "NPC1")
+                        {
+                            animator.SetBool(killing1id, true);
+                        }
+                        else if (Enemy.tag == "NPC2")
+                        {
+                            animator.SetBool(killing2id, true);
+                        }
+                        else if (Enemy.tag == "NPC3")
+                        {
+                            animator.SetBool(killing3id, true);
+                        }
+                        bloodmeter++;
+                        suckingblood = true;
+                        scaretimer = 2;
+                    }
+                }
+
+                if (Input.GetKeyDown(KeyCode.LeftShift))
+                {
+
+                    if (batform == false)
+                    {
+                        BatForm();
+                    }
+                }
+
+
+
+
             }
-
-
-
-
         }
-    }
+    
     private void FixedUpdate()
     {
         float delta = Time.fixedDeltaTime*1000;
         if (vampiremove == Direction.NONE)
         {
+            animator.SetBool(walkingid, false);
             rb2d.velocity = Vector2.zero;
         }
 

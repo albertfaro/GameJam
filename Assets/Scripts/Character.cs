@@ -184,6 +184,7 @@ public class Character : MonoBehaviour
         if (vampiremove == Direction.NONE)
         {
             rb2d.velocity = Vector2.zero;
+            animator.SetBool(walkingid, false);
         }
 
         else if (vampiremove == Direction.UP)

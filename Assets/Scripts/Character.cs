@@ -21,7 +21,7 @@ public class Character : MonoBehaviour
     public float life;
     public float damagetimer;
     public bool takingdamage;
-    public int bloodmeter;
+    
     public float battimer;
     public bool batform;
     public float scaretimer;
@@ -31,6 +31,7 @@ public class Character : MonoBehaviour
     private int killing1id;
     private int killing2id;
     private int killing3id;
+    private int batformid;
 
     private void Awake()
     {
@@ -51,7 +52,9 @@ public class Character : MonoBehaviour
         killing1id = Animator.StringToHash("Killing1");
         killing2id = Animator.StringToHash("Killing2");
         killing3id = Animator.StringToHash("Killing3");
+        batformid = Animator.StringToHash("Batform");
         LevelManager.Instance.safe = false;
+        
         //safe = false;
     }
 
@@ -62,6 +65,7 @@ public class Character : MonoBehaviour
 
         float delta = Time.deltaTime;
         vampiremove = Direction.NONE;
+        LevelManager.Instance.timetodie = damagetimer;
 
         if (scaretimer > 0 && suckingblood)
         {
@@ -150,7 +154,7 @@ public class Character : MonoBehaviour
                         animator.SetBool(killing3id, true);
                     }
                     LevelManager.Instance.killedCiv();
-                    bloodmeter++;
+                    
                     suckingblood = true;
                     scaretimer = 2;
                 }
@@ -202,13 +206,14 @@ public class Character : MonoBehaviour
 
     private void BatForm()
     {
-        if (bloodmeter > 0 && batform==false)
+        if (LevelManager.Instance.BatFormsLeft > 0 && batform==false)
         {
+            animator.SetBool(batformid, true);
 
             batform = true;
             takingdamage = false;
             speed = 100;
-            bloodmeter--;
+            LevelManager.Instance.BatFormsLeft--;
         }
         if (batform == true)
         {
@@ -216,6 +221,7 @@ public class Character : MonoBehaviour
             damagetimer = 3;
             if (battimer <= 0)
             {
+                animator.SetBool(batformid, false);
                 batform = false;
                 battimer = 4;
             }

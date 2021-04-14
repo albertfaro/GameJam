@@ -50,7 +50,7 @@ public class NPCController : MonoBehaviour
         float delta = Time.deltaTime;
         if (dead==true)
         {
-            FindObjectOfType<SoundManager>().Play("Grito2");
+           
             sprite.enabled = false;
             this.transform.localScale = deadscale;
 
@@ -125,14 +125,19 @@ public class NPCController : MonoBehaviour
         {
             scared = true;
             scaredtimer = 6;
-            
-            
+
+            int random = Random.Range(0, 6);
+            if (random <= 3)
+            {
+                FindObjectOfType<SoundManager>().Play("Grito1");
+            }
+            else
+            {
                 FindObjectOfType<SoundManager>().Play("Grito2");
-            
-           
-            
-                
-            
+            }
+
+
+
         }
         if (Vector2.Distance(this.transform.position, Player.transform.position) > radius && scaredtimer<=0)
         {

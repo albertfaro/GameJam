@@ -7,11 +7,13 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance { get; private set; }
+    public int BatFormsLeft;
     public int civKilled;
     public int civToWin;
     public int civLeft;
     public bool safe;
     public int nightcount;
+    public float timetodie;
     public float timeLeft; //Definir segundos para que acabe la partida
     [SerializeField]private Text uiText;
     [SerializeField] private Text murderedCiv;
@@ -26,11 +28,13 @@ public class LevelManager : MonoBehaviour
         {
             Instance = this;
         }
+        
     }
 
     // Start is called before the first frame update
     void Start()
     {
+        BatFormsLeft = 3;
         nightcount = 0;
         civToWin = 30;
         civKilled = 0;
@@ -89,7 +93,7 @@ public class LevelManager : MonoBehaviour
 
     public void endNight()
     {
-        timeLeft = 120;
+        timeLeft = 180;
         nightcount++;
         if(nightcount >= 1)
         {

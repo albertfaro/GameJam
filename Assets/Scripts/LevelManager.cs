@@ -10,8 +10,15 @@ public class LevelManager : MonoBehaviour
     public int civKilled;
     public int civToWin;
     public int civLeft;
-    public float timeLeft = 120f; //Definir segundos para que acabe la partida
+    public bool safe;
+    public int nightcount;
+    public float timeLeft; //Definir segundos para que acabe la partida
     [SerializeField]private Text uiText;
+    [SerializeField] private Text murderedCiv;
+    [SerializeField] private Text remainingCiv;
+    [SerializeField] private Text nightCountText;
+
+
 
     private void Awake()
     {
@@ -24,6 +31,7 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        nightcount = 0;
         civToWin = 30;
         civKilled = 0;
         
@@ -32,9 +40,13 @@ public class LevelManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        civLeft = civToWin - civKilled;
         timeLeft -= Time.deltaTime;
         uiText.text = "Time left: " + timeLeft.ToString("F");
-        civLeft = civToWin - civKilled;
+        murderedCiv.text = "You have killed " + civKilled + " people";
+        remainingCiv.text = civLeft + " people left";
+        nightCountText.text = "Night " + (nightcount + 1) + "/3"; 
+        
 
         if(civKilled >= civToWin)
         {
@@ -43,7 +55,15 @@ public class LevelManager : MonoBehaviour
 
         if(timeLeft < 0)
         {
-            defeat();
+            if(safe)
+            {
+                endNight();
+            }
+            else
+            {
+                defeat();
+            }
+            
         }
         
 
@@ -67,5 +87,13 @@ public class LevelManager : MonoBehaviour
         civKilled++;
     }
 
-    
+    public void endNight()
+    {
+        timeLeft = 120;
+        nightcount++;
+        if(nightcount >= 1)
+        {
+            defeat();
+        }
+    }
 }

@@ -8,7 +8,7 @@ public class Character : MonoBehaviour
     Vector2 bitescale;
     Vector2 normalscale;
     private Animator animator;
-    public bool safe;
+    //public bool safe;
     public enum Direction { NONE, UP, DOWN, LEFT, RIGHT };
     private Direction vampiremove;
     public NPCController killingenemy;
@@ -51,7 +51,8 @@ public class Character : MonoBehaviour
         killing1id = Animator.StringToHash("Killing1");
         killing2id = Animator.StringToHash("Killing2");
         killing3id = Animator.StringToHash("Killing3");
-        safe = false;
+        LevelManager.Instance.safe = false;
+        //safe = false;
     }
 
     // Update is called once per frame
@@ -148,6 +149,7 @@ public class Character : MonoBehaviour
                     {
                         animator.SetBool(killing3id, true);
                     }
+                    LevelManager.Instance.killedCiv();
                     bloodmeter++;
                     suckingblood = true;
                     scaretimer = 2;
@@ -298,7 +300,8 @@ public class Character : MonoBehaviour
         }
         if(collision.gameObject.tag == "House")
         {
-            safe = true;
+            LevelManager.Instance.safe = true;
+            //safe = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -310,7 +313,8 @@ public class Character : MonoBehaviour
         }
         if (collision.gameObject.tag == "House")
         {
-            safe = false;
+            LevelManager.Instance.safe = false;
+            //safe = false;
         }
     }
 }

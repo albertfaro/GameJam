@@ -9,6 +9,12 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: 8163aabeb9e022643b23d29cce2fcc06
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    path: Assets/Scenes/MoncayoPruebas.unity
+    guid: 03a3d74ecf21bbb44874878af80b7429
+  - enabled: 1
+    path: Assets/Scenes/Victory.unity
+    guid: bd3948220f3a35b49b89d32f15947e68
+  - enabled: 1
+    path: Assets/Scenes/Defeat.unity
+    guid: 50d37c17052fc8a41ab6b9a532ba8275
   m_configObjects: {}

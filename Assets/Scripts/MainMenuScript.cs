@@ -7,7 +7,7 @@ public class MainMenuScript : MonoBehaviour
     // Start is called before the first frame update
   public void playGame()
     {
-        SceneManager.LoadScene("MoncayoPruebas", LoadSceneMode.Single);
+        SceneManager.LoadScene("PreLevel", LoadSceneMode.Single);
     }
 
 

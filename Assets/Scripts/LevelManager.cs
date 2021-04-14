@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     public int nightcount;
     public float timetodie;
     public float timeLeft;
+    public float timePowerUp = 15;
     public bool dead;
     public bool takingDamage;
     //Definir segundos para que acabe la partida
@@ -54,6 +55,7 @@ public class LevelManager : MonoBehaviour
         
         civLeft = civToWin - civKilled;
         timeLeft -= Time.deltaTime;
+        timePowerUp -= Time.deltaTime;
         uiText.text = timeLeft.ToString("F");
         murderedCiv.text = civKilled + ("/") + civToWin;
         //remainingCiv.text = civLeft + " people left";
@@ -81,6 +83,20 @@ public class LevelManager : MonoBehaviour
                 defeat();
             }
             
+        }
+
+        if(timePowerUp < 0)
+        {
+            if(BatFormsLeft < 3)
+            {
+                BatFormsLeft++;
+                timePowerUp = 15;
+            }
+
+            else
+            {
+                timePowerUp = 15;
+            }
         }
 
 
@@ -113,7 +129,7 @@ public class LevelManager : MonoBehaviour
         {
             defeat();
         }
-
+        FindObjectOfType<SoundManager>().Play("changeNight");
     }
     public void death()
     {

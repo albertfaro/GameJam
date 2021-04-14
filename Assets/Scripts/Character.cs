@@ -90,8 +90,9 @@ public class Character : MonoBehaviour
 
             if (batform == true)
             {
-
+                
                 BatForm();
+                
             }
             else if (takingdamage == true)
             {
@@ -158,7 +159,11 @@ public class Character : MonoBehaviour
                         animator.SetBool(killing3id, true);
                     }
                     LevelManager.Instance.killedCiv();
-                    
+
+                    /*if (LevelManager.Instance.BatFormsLeft < 3)
+                    {
+                        LevelManager.Instance.BatFormsLeft++;
+                    }*/
                     suckingblood = true;
                     scaretimer = 2;
                 }
@@ -220,6 +225,7 @@ public class Character : MonoBehaviour
             takingdamage = false;
             speed = 100;
             LevelManager.Instance.BatFormsLeft--;
+            FindObjectOfType<SoundManager>().Play("Transformacion");
         }
         if (batform == true)
         {

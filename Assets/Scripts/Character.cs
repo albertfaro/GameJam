@@ -109,6 +109,7 @@ public class Character : MonoBehaviour
 
                 if (cansuckblood)
                 {
+                    //FindObjectOfType<SoundManager>().Play("Mordisco");
                     killingenemy.dead = true;
                     bloodmeter++;
                     suckingblood = true;

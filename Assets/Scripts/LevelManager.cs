@@ -21,6 +21,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private Text murderedCiv;
     [SerializeField] private Text remainingCiv;
     [SerializeField] private Text nightCountText;
+    [SerializeField] private Text time2die;
+    [SerializeField] private Text batUses;
+
 
 
 
@@ -53,6 +56,11 @@ public class LevelManager : MonoBehaviour
         murderedCiv.text = "You have killed " + civKilled + " people";
         remainingCiv.text = civLeft + " people left";
         nightCountText.text = "Night " + (nightcount + 1) + "/3";
+        if (timetodie < 3)
+        {
+            time2die.text = "Dying in " + timetodie + " seconds!";
+        }
+        batUses.text = BatFormsLeft + " transformations left";
 
         death();
         if (civKilled >= civToWin)

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class NPCController : MonoBehaviour
 {
+    private Vector2 deadscale;
     private Rigidbody2D rb2d; //reference to this object's rigid body
     private BoxCollider2D bc2d;
     public float rotation; // the rotation that will be applied to the NPC when he changes his movement
@@ -17,10 +18,14 @@ public class NPCController : MonoBehaviour
     public float deathtimer;
     public float scaredtimer;
     private SpriteRenderer sprite;
+    private Animator animator;
+    private int deadid;
    
 
     private void Awake()
-    {
+    {   
+
+        animator = GetComponent<Animator>();
         rb2d = GetComponent<Rigidbody2D>();
         bc2d = GetComponent<BoxCollider2D>();
         sprite = GetComponent<SpriteRenderer>();
@@ -28,6 +33,8 @@ public class NPCController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        deadscale = new Vector2(1.2f, 1.2f);
+        deadid = Animator.StringToHash("Dead");
         Player = GameObject.FindGameObjectWithTag("Playable");
         scared = false;
         radius = 100;
@@ -43,15 +50,22 @@ public class NPCController : MonoBehaviour
         float delta = Time.deltaTime;
         if (dead==true)
         {
+            FindObjectOfType<SoundManager>().Play("Grito2");
             sprite.enabled = false;
+            this.transform.localScale = deadscale;
+
             Destroy(rb2d);
             Destroy(bc2d);
+            
             deathtimer -= delta;
 
         }
         if (deathtimer <= 0)
         {
+            
             sprite.enabled = true;
+            
+            animator.SetBool(deadid, true);
             Destroy(gameObject, 5);
         }
         if (dead == false)
@@ -111,7 +125,14 @@ public class NPCController : MonoBehaviour
         {
             scared = true;
             scaredtimer = 6;
-
+            
+            
+                FindObjectOfType<SoundManager>().Play("Grito2");
+            
+           
+            
+                
+            
         }
         if (Vector2.Distance(this.transform.position, Player.transform.position) > radius && scaredtimer<=0)
         {

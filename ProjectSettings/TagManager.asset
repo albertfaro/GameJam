@@ -12,6 +12,10 @@ TagManager:
   - Scenario
   - Cam
   - ZoneLimiter
+  - NPC1
+  - NPC2
+  - NPC3
+  - House
   layers:
   - Default
   - TransparentFX

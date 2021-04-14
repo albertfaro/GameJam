@@ -4,11 +4,16 @@ using UnityEngine;
 
 public class Character : MonoBehaviour
 {
+    public GameObject Enemy;
+    Vector2 bitescale;
+    Vector2 normalscale;
+    private Animator animator;
+    public bool safe;
     public enum Direction { NONE, UP, DOWN, LEFT, RIGHT };
     private Direction vampiremove;
     public NPCController killingenemy;
     public Camera cam;
-    private float speed = 0.0000003f;
+    private float speed = 50f;
     public float rotation = 100;
     public bool cansuckblood = false;
     public bool suckingblood = false;
@@ -22,19 +27,31 @@ public class Character : MonoBehaviour
     public float scaretimer;
     private Rigidbody2D rb2d;
     private Vector3 mouseposition;
+    private int walkingid;
+    private int killing1id;
+    private int killing2id;
+    private int killing3id;
+
     private void Awake()
     {
         bc2d = GetComponent<BoxCollider2D>();
         rb2d = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
        
     }
     // Start is called before the first frame update
     void Start()
     {
+        bitescale = new Vector2(0.7f, 0.7f);
+        normalscale = new Vector2(1, 1);
         battimer = 4;
         damagetimer = 3;
-       
         scaretimer = 0;
+        walkingid = Animator.StringToHash("Walking");
+        killing1id = Animator.StringToHash("Killing1");
+        killing2id = Animator.StringToHash("Killing2");
+        killing3id = Animator.StringToHash("Killing3");
+        safe = false;
     }
 
     // Update is called once per frame
@@ -44,17 +61,23 @@ public class Character : MonoBehaviour
 
         float delta = Time.deltaTime;
         vampiremove = Direction.NONE;
-        
+
         if (scaretimer > 0 && suckingblood)
         {
             scaretimer -= delta;
         }
         else if (scaretimer <= 0)
         {
-            
-                suckingblood = false;
 
-            
+            animator.SetBool(killing1id, false);
+            animator.SetBool(killing2id, false);
+            animator.SetBool(killing3id, false);
+            this.transform.localScale = normalscale;
+
+            suckingblood = false;
+
+     
+
 
             if (batform == true)
             {
@@ -109,8 +132,22 @@ public class Character : MonoBehaviour
 
                 if (cansuckblood)
                 {
-                    //FindObjectOfType<SoundManager>().Play("Mordisco");
+                    FindObjectOfType<SoundManager>().Play("Mordisco");
                     killingenemy.dead = true;
+                    this.transform.localScale = bitescale;
+                    
+                    if (Enemy.tag == "NPC1")
+                    {
+                        animator.SetBool(killing1id, true);
+                    }
+                    else if (Enemy.tag == "NPC2")
+                    {
+                        animator.SetBool(killing2id, true);
+                    }
+                    else if (Enemy.tag == "NPC3")
+                    {
+                        animator.SetBool(killing3id, true);
+                    }
                     bloodmeter++;
                     suckingblood = true;
                     scaretimer = 2;
@@ -142,18 +179,22 @@ public class Character : MonoBehaviour
         else if (vampiremove == Direction.UP)
         {
             rb2d.velocity = transform.up * speed;
+            animator.SetBool(walkingid, true);
         }
        else if (vampiremove == Direction.DOWN)
         {
             rb2d.velocity = transform.up * speed * -1 ;
+            animator.SetBool(walkingid, true);
         }
         else if (vampiremove == Direction.RIGHT)
         {
             rb2d.velocity = transform.right * speed  ;
+            animator.SetBool(walkingid, true);
         }
         else if (vampiremove == Direction.LEFT)
         {
             rb2d.velocity = transform.right * speed * -1;
+            animator.SetBool(walkingid, true);
         }
     }
 
@@ -209,7 +250,7 @@ public class Character : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "NPC")
+        if (collision.gameObject.tag == "NPC1" || collision.gameObject.tag == "NPC2" || collision.gameObject.tag == "NPC3" )
         {
             if (cansuckblood == false)
             {
@@ -233,24 +274,31 @@ public class Character : MonoBehaviour
 
 
                 killingenemy = collision.gameObject.GetComponent<NPCController>();
+                Enemy = collision.gameObject;
 
             }
         }
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "NPC")
+        if (collision.gameObject.tag == "NPC1"|| collision.gameObject.tag == "NPC2" || collision.gameObject.tag == "NPC3"   )
         {
             cansuckblood = false;
             killingenemy = null;
+            Enemy = null;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Linterna" && batform ==false)
-        {
+        {   
+            FindObjectOfType<SoundManager>().Play("GritoVampiro");
             takingdamage = true;
+        }
+        if(collision.gameObject.tag == "House")
+        {
+            safe = true;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -259,6 +307,10 @@ public class Character : MonoBehaviour
         {
             takingdamage = false;
             damagetimer = 3;
+        }
+        if (collision.gameObject.tag == "House")
+        {
+            safe = false;
         }
     }
 }

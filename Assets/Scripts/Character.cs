@@ -69,7 +69,7 @@ public class Character : MonoBehaviour
         float delta = Time.deltaTime;
         vampiremove = Direction.NONE;
         LevelManager.Instance.timetodie = damagetimer;
-        
+        LevelManager.Instance.takingDamage = takingdamage;
 
         if (scaretimer > 0 && suckingblood)
         {
@@ -177,6 +177,7 @@ public class Character : MonoBehaviour
 
 
         }
+        
     }
     private void FixedUpdate()
     {

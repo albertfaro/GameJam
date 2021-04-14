@@ -16,10 +16,11 @@ public class LevelManager : MonoBehaviour
     public float timetodie;
     public float timeLeft;
     public bool dead;
+    public bool takingDamage;
     //Definir segundos para que acabe la partida
     [SerializeField]private Text uiText;
     [SerializeField] private Text murderedCiv;
-    [SerializeField] private Text remainingCiv;
+    //[SerializeField] private Text remainingCiv;
     [SerializeField] private Text nightCountText;
     [SerializeField] private Text time2die;
     [SerializeField] private Text batUses;
@@ -33,6 +34,7 @@ public class LevelManager : MonoBehaviour
         {
             Instance = this;
         }
+
         
     }
 
@@ -52,15 +54,15 @@ public class LevelManager : MonoBehaviour
         
         civLeft = civToWin - civKilled;
         timeLeft -= Time.deltaTime;
-        uiText.text = "Time left: " + timeLeft.ToString("F");
-        murderedCiv.text = "You have killed " + civKilled + " people";
-        remainingCiv.text = civLeft + " people left";
-        nightCountText.text = "Night " + (nightcount + 1) + "/3";
-        if (timetodie < 3)
+        uiText.text = timeLeft.ToString("F");
+        murderedCiv.text = civKilled + ("/") + civToWin;
+        //remainingCiv.text = civLeft + " people left";
+        nightCountText.text = (nightcount + 1) + "/3";
+        if (takingDamage)
         {
             time2die.text = "Dying in " + timetodie + " seconds!";
         }
-        batUses.text = BatFormsLeft + " transformations left";
+        batUses.text = BatFormsLeft + ("/3");
 
         death();
         if (civKilled >= civToWin)
@@ -107,7 +109,7 @@ public class LevelManager : MonoBehaviour
     {
         timeLeft = 180;
         nightcount++;
-        if(nightcount >= 1)
+        if(nightcount >= 3)
         {
             defeat();
         }

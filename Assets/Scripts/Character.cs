@@ -70,7 +70,11 @@ public class Character : MonoBehaviour
         vampiremove = Direction.NONE;
         LevelManager.Instance.timetodie = damagetimer;
         LevelManager.Instance.takingDamage = takingdamage;
-
+        if(!takingdamage)
+        {
+            LevelManager.Instance.takingDamage = false;
+        }
+        
         if (scaretimer > 0 && suckingblood)
         {
             scaretimer -= delta;

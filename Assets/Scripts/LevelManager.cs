@@ -64,6 +64,10 @@ public class LevelManager : MonoBehaviour
         {
             time2die.text = "Dying in " + timetodie + " seconds!";
         }
+        if(!takingDamage)
+        {
+            time2die.text = "You're fine";
+        }
         batUses.text = BatFormsLeft + ("/3");
 
         death();

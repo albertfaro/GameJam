@@ -21,7 +21,8 @@ public class Character : MonoBehaviour
     public float life;
     public float damagetimer;
     public bool takingdamage;
-    
+
+    public bool safe;
     public float battimer;
     public bool batform;
     public float scaretimer;
@@ -32,6 +33,7 @@ public class Character : MonoBehaviour
     private int killing2id;
     private int killing3id;
     private int batformid;
+    public bool alive;
 
     private void Awake()
     {
@@ -43,6 +45,7 @@ public class Character : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        alive = true;
         bitescale = new Vector2(0.7f, 0.7f);
         normalscale = new Vector2(1, 1);
         battimer = 4;
@@ -62,10 +65,11 @@ public class Character : MonoBehaviour
     void Update()
     {
 
-
+        LevelManager.Instance.dead = alive;
         float delta = Time.deltaTime;
         vampiremove = Direction.NONE;
         LevelManager.Instance.timetodie = damagetimer;
+        
 
         if (scaretimer > 0 && suckingblood)
         {
@@ -250,8 +254,8 @@ public class Character : MonoBehaviour
     {
         if (damagetimer <= 0)
         {
-            life--;
-            damagetimer = 3;
+
+            alive = false;
         }
 
     }
@@ -306,8 +310,9 @@ public class Character : MonoBehaviour
         }
         if(collision.gameObject.tag == "House")
         {
-            LevelManager.Instance.safe = true;
-            //safe = true;
+            
+            safe = true;
+            LevelManager.Instance.safe = safe;
         }
     }
     private void OnTriggerExit2D(Collider2D collision)
@@ -319,8 +324,9 @@ public class Character : MonoBehaviour
         }
         if (collision.gameObject.tag == "House")
         {
-            LevelManager.Instance.safe = false;
-            //safe = false;
+            
+            safe = false;
+            LevelManager.Instance.safe = safe;
         }
     }
 }

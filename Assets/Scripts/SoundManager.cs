@@ -5,11 +5,19 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour {
     //FindObjectOfType<SoundManager>().Play("NOMBRESONIDO"); Para reproducir un sonido desde otro script
     public Sound[] sounds;
+    public static SoundManager Instance { get; private set; }
 
     private void Awake()
     {
-        DontDestroyOnLoad(this);
-
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(this);
+        }
+        else
+        {
+            Destroy(this);
+        }
 
         foreach (Sound s in sounds)
         {
